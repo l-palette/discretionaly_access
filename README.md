@@ -1,6 +1,6 @@
 # Дискреционная модель доступа
 ### Структура программы
-
+```
 /discretionaly_access_control
 |   /templates
 |   |   ├── index.html
@@ -61,35 +61,37 @@
 |   database.py
 |   models.py
 └── app.py
-
+```
 ### Структура базы данных
-
+```
 users (userid, username, password)
 tasks (taskid, userid, directory)
 categories (categoryid, category)
 task_categories (taskid, categoryid)
 task_rights (taskid, userid, rights)
+```
 
+```
 docker run --name db_discretionaly_access_control -p 5432:5432 -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password -e POSTGRES_DB=db_discretionaly_access -e PGDATA=/var/lib/postgresql/data/pgdata -d -v "$(pwd)/postgres_data":/var/lib/postgresql/data postgres
-
+```
 
 ### Права доступа
-
+```
 read (R)    |   0b0001  |   1   
 write (W)   |   0b0010  |   2
 tg (TG)     |   0b0100  |   4
 own (O)     |   0b1000  |   8
-
+```
 ### Пользователи
-
+```
 admin       |   Администратор       |   Просмотр, Создание,    
 dev1        |   Разработчик тасков  |   Просмотр, Создание, 
 dev2        |   Разработчик тасков  |   Просмотр, Создание, 
 designer    |   Веб-дизайнер        |   Просмотр
 participant |   Участник            |   Просмотр
-
+```
 ### Матрица доступа
-
+```
         |   admin  |  dev1   |  dev2   |  designer  |  participant 
 task1   |   0b0111 |  0b1111 |  0b0001 |  0b0000    |  0b0001 
 task2   |   0b0111 |  0b1111 |  0b0001 |  0b0000    |  0b0001
@@ -101,7 +103,7 @@ test2   |   0b1111 |  0b0000 |  0b0000 |  0b0001    |  0b0000
 test3   |   0b1111 |  0b0000 |  0b0000 |  0b0001    |  0b0000
 test4   |   0b1111 |  0b0000 |  0b0000 |  0b0001    |  0b0000
 test5   |   0b1111 |  0b0000 |  0b0000 |  0b0001    |  0b0000
-
+```
 - Администратор имеет доступ R/W/TG к таскам, доступ R/W/TG/O к тестовым заданиям.
 - Разработчики имеют доступ R/W/TG или R/W/TG/O к таскам, не имеют доступа к тестовым заданиям.
 - Веб-дизайнер не имеет доступа к таскам, доступ R к тестовым заданиям.
